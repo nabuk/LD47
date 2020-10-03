@@ -16,6 +16,9 @@ public class GameController : MonoBehaviour
     AsteroidSpawner asteroidSpawner = default;
 
     [SerializeField]
+    Timer timer = default;
+
+    [SerializeField]
     GameObject pauseText = default;
 
     [SerializeField]
@@ -26,6 +29,10 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        var gameTimeSec = 1 * 60;
+        timer.SetTime(1 * 60);
+        timer.StartTime();
+        asteroidSpawner.StartSpawning(gameTimeSec);
     }
 
     // Update is called once per frame
@@ -36,10 +43,10 @@ public class GameController : MonoBehaviour
             PauseToggle();
         }
 
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            asteroidSpawner.Spawn();
-        }
+        //if (Input.GetKeyDown(KeyCode.S))
+        //{
+        //    asteroidSpawner.SpawnSafe();
+        //}
     }
 
     IEnumerator ShowInstructionsLetterByLetter()
