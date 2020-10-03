@@ -693,6 +693,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   orbitalPeriod: 8
+  crewCapsuleCollider: {fileID: 403636023}
 --- !u!61 &403636023
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1326,6 +1327,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1360627924}
   - component: {fileID: 1360627923}
+  - component: {fileID: 1360627925}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -1345,8 +1347,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 936ca2cfa816bd24883d42970bb72c57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  asteroidSpawner: {fileID: 1890817974}
-  timer: {fileID: 801632068}
   pauseText: {fileID: 316379090}
   instructionsText: {fileID: 167243535}
 --- !u!4 &1360627924
@@ -1368,6 +1368,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1360627925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1360627922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da487a5a6d39ef54981870d078f6dde4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asteroidSpawner: {fileID: 1890817974}
+  crewCapsule: {fileID: 403636022}
+  timer: {fileID: 801632068}
 --- !u!1 &1522409866
 GameObject:
   m_ObjectHideFlags: 0

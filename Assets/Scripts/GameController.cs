@@ -13,39 +13,30 @@ public class GameController : MonoBehaviour
     }
 
     [SerializeField]
-    AsteroidSpawner asteroidSpawner = default;
-
-    [SerializeField]
-    Timer timer = default;
-
-    [SerializeField]
     GameObject pauseText = default;
 
     [SerializeField]
     TMP_Text instructionsText = default;
 
+    PlaythroughMode playthroughMode;
+
     bool pause = false;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        var gameTimeSec = 1 * 60;
-        timer.SetTime(1 * 60);
-        timer.StartTime();
-        asteroidSpawner.StartSpawning(gameTimeSec);
+        playthroughMode = GetComponent<PlaythroughMode>();
     }
 
-    // Update is called once per frame
+    void Start()
+    {
+        playthroughMode.Start();
+    }
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            PauseToggle();
-        }
-
-        //if (Input.GetKeyDown(KeyCode.S))
+        //if (Input.GetKeyDown(KeyCode.P))
         //{
-        //    asteroidSpawner.SpawnSafe();
+        //    PauseToggle();
         //}
     }
 

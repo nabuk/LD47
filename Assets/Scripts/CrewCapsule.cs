@@ -1,12 +1,25 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class CrewCapsule : MonoBehaviour, ICollisionHandler
 {
     public CollisionObjectType Type => CollisionObjectType.CrewCapsule;
 
+    public event Action Died = delegate { };
+    public event Action<CollisionObjectType> LostLife = delegate { };
+
+    public void BeginPlaythrough()
+    {
+        lives = 3;
+    }
+
     [SerializeField]
     float orbitalPeriod = 4f;
 
+    [SerializeField]
+    Collider2D crewCapsuleCollider = default;
+
+    int lives;
     float p;
     float r;
 
@@ -32,6 +45,21 @@ public class CrewCapsule : MonoBehaviour, ICollisionHandler
 
     void ICollisionHandler.CollidedWith(CollisionObjectType objectType)
     {
-        // TODO: A projectile or asteroid just hit it. React
+        if (lives > 0)
+        {
+            lives--;
+
+            if (lives == 0)
+            {
+                Died();
+            }
+            else
+            {
+                LostLife(objectType);
+
+                //TODO: invincible mode
+                //crewCapsuleCollider.enabled = false;
+            }
+        }
     }
 }

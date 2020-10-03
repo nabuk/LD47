@@ -1,14 +1,10 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
-    [SerializeField]
-    TMP_Text text = default;
-
-    int seconds = 0;
-    float elapsed = 0;
-    bool measureElapsed = false;
+    public event Action TimePassed = delegate { };
 
     public void SetTime(int seconds)
     {
@@ -27,6 +23,13 @@ public class Timer : MonoBehaviour
         measureElapsed = false;
     }
 
+    [SerializeField]
+    TMP_Text text = default;
+
+    int seconds = 0;
+    float elapsed = 0;
+    bool measureElapsed = false;
+
     void Update()
     {
         if (measureElapsed)
@@ -37,8 +40,7 @@ public class Timer : MonoBehaviour
             if (elapsed >= seconds)
             {
                 StopTimer();
-
-                //TODO: win condition
+                TimePassed();
             }
         }
     }

@@ -4,10 +4,17 @@ public class AsteroidSpawner : MonoBehaviour
 {
     public const float SpawnDistance = 17f;
 
-    public void StartSpawning(int totalTime)
+    public void StartSpawningForPlaythroughMode(int totalTime)
     {
         this.totalTime = totalTime;
         this.elapsed = 0f;
+        this.autoSpawning = true;
+        this.lastSpawnTime = float.MinValue;
+        this.currentCooldown = 0f;
+    }
+
+    public void StartSpawningForIdleMode()
+    {
         this.autoSpawning = true;
         this.lastSpawnTime = float.MinValue;
         this.currentCooldown = 0f;
@@ -25,15 +32,24 @@ public class AsteroidSpawner : MonoBehaviour
     float lastSpawnTime;
     float currentCooldown;
     bool autoSpawning = false;
+    bool idleMode = true;
 
 
     void Update()
     {
         if (autoSpawning)
         {
-            elapsed = Mathf.Clamp(elapsed + Time.deltaTime, 0, totalTime);
-            var progress = elapsed / totalTime;
-            SpawnParams args = GetSpawnBasedOnProgress(progress);
+            SpawnParams args;
+            if (idleMode)
+            {
+                args = SpawnParams.Safe;
+            }
+            else
+            {
+                elapsed = Mathf.Clamp(elapsed + Time.deltaTime, 0, totalTime);
+                var progress = elapsed / totalTime;
+                args = GetSpawnBasedOnProgress(progress);
+            }
 
             if (lastSpawnTime + currentCooldown <= Time.time)
             {
