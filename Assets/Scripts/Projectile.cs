@@ -34,7 +34,7 @@ public class Projectile : MonoBehaviour, ICollisionHandler
             this.HandleHits(hit.collider);
     }
 
-    public void CollidedWith(CollisionObjectType objectType)
+    void ICollisionHandler.CollidedWith(CollisionObjectType objectType)
     {
         Destroy(gameObject);
     }

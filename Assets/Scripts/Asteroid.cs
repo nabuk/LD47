@@ -16,14 +16,18 @@ public class Asteroid : MonoBehaviour, ICollisionHandler
         this.gravityForceMag = gravityForceMag;
     }
 
-    float r = 0.2f;
+    const float destroyNotSoonerThanSec = 5;
+    float r;
     Vector2 v;
     Vector2 gravitySource;
     float gravityForceMag;
+    float createdAt;
+    
 
     void Awake()
     {
-        this.GetComponent<CircleCollider2D>().radius = r;
+        createdAt = Time.time;
+        r = this.GetComponent<CircleCollider2D>().radius;
     }
 
 
@@ -44,6 +48,8 @@ public class Asteroid : MonoBehaviour, ICollisionHandler
 
         var hits = Physics2D.OverlapCircleAll(this.transform.position, r);
         this.HandleHits(hits);
+
+        CheckIfShouldDestroyBecauseWentOffScreen();
     }
 
     void ICollisionHandler.CollidedWith(CollisionObjectType objectType)
@@ -51,5 +57,14 @@ public class Asteroid : MonoBehaviour, ICollisionHandler
         //TODO: some effect before
 
         Destroy(gameObject);
+    }
+
+    void CheckIfShouldDestroyBecauseWentOffScreen()
+    {
+        if (Time.time - createdAt > destroyNotSoonerThanSec
+            && transform.position.magnitude > AsteroidSpawner.SpawnDistance * 0.95f)
+        {
+            Destroy(gameObject);
+        }
     }
 }

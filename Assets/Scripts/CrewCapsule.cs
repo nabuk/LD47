@@ -1,19 +1,18 @@
 ﻿using UnityEngine;
 
-public class CrewCapsule : MonoBehaviour
+public class CrewCapsule : MonoBehaviour, ICollisionHandler
 {
-    [SerializeField]
-    float orbitalPeriod = 4f;
+    public CollisionObjectType Type => CollisionObjectType.CrewCapsule;
 
     [SerializeField]
-    Transform altitude = default;
+    float orbitalPeriod = 4f;
 
     float p;
     float r;
 
     void Awake()
     {
-        r = altitude.localPosition.magnitude;
+        r = transform.position.magnitude;
         p = 0;
     }
 
@@ -21,7 +20,7 @@ public class CrewCapsule : MonoBehaviour
     {
         var timeScale = Time.deltaTime;
         p = Mathf.Repeat(p + timeScale / orbitalPeriod, 1f);
-        altitude.localPosition = CalculatePosition(p, r);
+        transform.position = CalculatePosition(p, r);
     }
 
     Vector2 CalculatePosition(float p, float r)
@@ -29,5 +28,10 @@ public class CrewCapsule : MonoBehaviour
         var angleAdjustment = 0.25f; // so that it starts from the top, not right
         var a = (p + angleAdjustment) * 360f * Mathf.Deg2Rad;
         return new Vector2(r * Mathf.Cos(a), r * Mathf.Sin(a));
+    }
+
+    void ICollisionHandler.CollidedWith(CollisionObjectType objectType)
+    {
+        // TODO: A projectile or asteroid just hit it. React
     }
 }

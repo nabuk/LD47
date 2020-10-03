@@ -2,15 +2,16 @@
 
 public class AsteroidSpawner : MonoBehaviour
 {
+    public const float SpawnDistance = 12f;
+
     public void Spawn()
     {
-        //// barely passing slow asteroids
+        // barely passing slow asteroids
         //var gravityForceMag = 60f;
         //var minRotationDeg = 52;
         //var maxRotationDeg = 52;
         //var minInitialForce = 1.5f;
         //var maxInitialForce = 1.5f;
-        //var distance = 10f;
 
 
         // barely passing slow asteroids
@@ -19,9 +20,9 @@ public class AsteroidSpawner : MonoBehaviour
         var maxRotationDeg = 58;
         var minInitialForce = 1.5f;
         var maxInitialForce = 3f;
-        var distance = 10f;
+        
 
-        var position = Quaternion.Euler(0, 0, Random.Range(0, 360f)) * Vector2.up * distance;
+        var position = Quaternion.Euler(0, 0, Random.Range(0, 360f)) * Vector2.up * SpawnDistance;
         var initialForce = Random.Range(minInitialForce, maxInitialForce);
         var towardsPlanet = (-position).normalized;
         var zRotation = Random.Range(minRotationDeg, maxRotationDeg) * (Random.Range(-1, 1) < 0 ? -1 : 1);
