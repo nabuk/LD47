@@ -2,29 +2,46 @@
 
 public class GunsController : MonoBehaviour
 {
-    float maxAngVelocity = 0.8f * 2f * Mathf.PI;
-    float angAcc = 1f * 2f * Mathf.PI;
-    float angDec = -2f * 2f * Mathf.PI;
+    [SerializeField]
+    ProjectileSpawner projectileSpawner = default;
 
-    float cwVel = 0, ccwVel = 0;
+    Gun[] guns;
+
+    void Awake()
+    {
+        guns = GetComponentsInChildren<Gun>();
+    }
 
     void Update()
     {
-        var timeScale = Time.deltaTime;
-        bool cw, ccw;
-        
-        cw = Input.GetKey(KeyCode.D);
-        ccw = Input.GetKey(KeyCode.A);
+        var mousePosition = GetMousePosition();
+        if (mousePosition != Vector2.zero)
+        {
+            var angle = Vector2.SignedAngle(Vector2.right, mousePosition) - 90f;
+            transform.eulerAngles = new Vector3(0, 0, angle);
+        }
 
-        var cwVelDelta = cw ? angAcc * timeScale : angDec * timeScale;
-        var ccwVelDelta = ccw ? angAcc * timeScale : angDec * timeScale;
+        if (Input.GetMouseButtonDown(0))
+        {
+            var projectileSpeed = 8f;
+            var zAngle = transform.eulerAngles.z;
+            Vector2 v = Quaternion.Euler(0, 0, zAngle) * (Vector2.up * projectileSpeed);
 
-        cwVel = Mathf.Clamp(cwVel + cwVelDelta, 0f, maxAngVelocity);
-        ccwVel = Mathf.Clamp(ccwVel + ccwVelDelta, 0f, maxAngVelocity);
+            foreach (var gun in guns)
+            {
+                projectileSpawner.Spawn(
+                    gun.ProjectileSpawnPoint,
+                    zAngle,
+                    v
+                    );
+            }
+                
+        }
+    }
 
-        var meanVelocity = -cwVel + ccwVel;
-        var rotationDelta = meanVelocity * timeScale;
-
-        transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z + rotationDelta * Mathf.Rad2Deg);
+    Vector2 GetMousePosition()
+    {
+        return Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 }
+

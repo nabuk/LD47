@@ -4,8 +4,7 @@ public class AsteroidSpawner : MonoBehaviour
 {
     public void Spawn()
     {
-        var asteroidObject = Instantiate(asteroidPrefab, this.transform);
-        var asteroid = asteroidObject.GetComponent<Asteroid>();
+        var asteroid = Instantiate(asteroidPrefab, this.transform);
         asteroid.Initialize(
             position: new Vector2(-5, 4),
             forceVector: new Vector2(2, 0),
@@ -14,5 +13,5 @@ public class AsteroidSpawner : MonoBehaviour
     }
 
     [SerializeField]
-    GameObject asteroidPrefab = default;
+    Asteroid asteroidPrefab = default;
 }
