@@ -12,6 +12,11 @@ public class AsteroidSpawner : MonoBehaviour
         this.lastSpawnTime = float.MinValue;
         this.currentCooldown = 0f;
         this.idleMode = false;
+
+        // kill remaining asteroids from the previous playthrough
+        //KillNotIdle();
+
+        KillAll();
     }
 
     public void StartSpawningForIdleMode()
@@ -76,7 +81,29 @@ public class AsteroidSpawner : MonoBehaviour
             position: position,
             forceVector: v,
             gravitySource: new Vector2(0, 0),
-            gravityForceMag: arg.GravityForceMag);
+            gravityForceMag: arg.GravityForceMag,
+            isIdle: idleMode);
+    }
+
+    void KillNotIdle()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            var asteroid = transform.GetChild(i).GetComponent<Asteroid>();
+            if (!asteroid.IsIdle)
+            {
+                Destroy(asteroid.gameObject);
+            }
+        }
+    }
+
+    void KillAll()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            var asteroid = transform.GetChild(i).GetComponent<Asteroid>();
+            Destroy(asteroid.gameObject);
+        }
     }
 
     SpawnParams GetSpawnBasedOnProgress(float progress)

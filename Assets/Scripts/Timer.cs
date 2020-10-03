@@ -25,6 +25,11 @@ public class Timer : MonoBehaviour
         measureElapsed = false;
     }
 
+    public void HideTimer()
+    {
+        text.gameObject.SetActive(false);
+    }
+
     [SerializeField]
     TMP_Text text = default;
 

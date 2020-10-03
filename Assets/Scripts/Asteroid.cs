@@ -2,18 +2,22 @@
 
 public class Asteroid : MonoBehaviour, ICollisionHandler
 {
+    public bool IsIdle => isIdle;
+
     public CollisionObjectType Type => CollisionObjectType.Asteroid;
 
     public void Initialize(
         Vector2 position,
         Vector2 forceVector,
         Vector2 gravitySource,
-        float gravityForceMag)
+        float gravityForceMag,
+        bool isIdle)
     {
         this.transform.position = position;
         this.v = forceVector;
         this.gravitySource = gravitySource;
         this.gravityForceMag = gravityForceMag;
+        this.isIdle = isIdle;
     }
 
     const float destroyNotSoonerThanSec = 5;
@@ -22,7 +26,7 @@ public class Asteroid : MonoBehaviour, ICollisionHandler
     Vector2 gravitySource;
     float gravityForceMag;
     float createdAt;
-    
+    bool isIdle;
 
     void Awake()
     {

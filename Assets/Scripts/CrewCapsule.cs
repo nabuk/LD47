@@ -11,17 +11,24 @@ public class CrewCapsule : MonoBehaviour, ICollisionHandler
     public void BeginPlaythrough()
     {
         lives = 3;
+        isActivePlaythrough = true;
+    }
+
+    public void StopPlaythrough()
+    {
+        isActivePlaythrough = false;
     }
 
     [SerializeField]
     float orbitalPeriod = 4f;
 
-    [SerializeField]
-    Collider2D crewCapsuleCollider = default;
+    //[SerializeField]
+    //Collider2D crewCapsuleCollider = default;
 
     int lives;
     float p;
     float r;
+    bool isActivePlaythrough = false;
 
     void Awake()
     {
@@ -45,6 +52,9 @@ public class CrewCapsule : MonoBehaviour, ICollisionHandler
 
     void ICollisionHandler.CollidedWith(CollisionObjectType objectType)
     {
+        if (!isActivePlaythrough)
+            return;
+
         if (lives > 0)
         {
             lives--;

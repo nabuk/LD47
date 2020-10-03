@@ -8,6 +8,7 @@ public class GunsController : MonoBehaviour
     ProjectileSpawner projectileSpawner = default;
 
     Gun[] guns;
+    bool skipNextFrame; // to avoid firing as continue
 
     void Awake()
     {
@@ -17,7 +18,10 @@ public class GunsController : MonoBehaviour
     void Update()
     {
         if (!GunsActive)
+        {
+            skipNextFrame = true;
             return;
+        }
 
         var mousePosition = GetMousePosition();
         if (mousePosition != Vector2.zero)
@@ -26,7 +30,7 @@ public class GunsController : MonoBehaviour
             transform.eulerAngles = new Vector3(0, 0, angle);
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (!skipNextFrame && Input.GetMouseButtonDown(0))
         {
             var projectileSpeed = 16f;
             var zAngle = transform.eulerAngles.z;
@@ -42,6 +46,8 @@ public class GunsController : MonoBehaviour
             }
                 
         }
+
+        skipNextFrame = false;
     }
 
     Vector2 GetMousePosition()

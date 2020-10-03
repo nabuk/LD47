@@ -4,12 +4,24 @@ public class PlaythroughMode : MonoBehaviour
 {
     public void BeginMode()
     {
-        timer.SetTime(1 * 60);
+        timer.SetTime(1 * 5);
         timer.StartTime();
         crewCapsule.BeginPlaythrough();
         asteroidSpawner.StartSpawningForPlaythroughMode(gameTimeSec);
         gunsController.GunsActive = true;
     }
+
+    public void StopMode()
+    {
+        timer.StopTimer();
+        timer.HideTimer();
+        crewCapsule.StopPlaythrough();
+        asteroidSpawner.StartSpawningForIdleMode();
+        gunsController.GunsActive = false;
+    }
+
+    [SerializeField]
+    GameOverMode gameOverMode = default;
 
     [SerializeField]
     GunsController gunsController = default;
@@ -34,22 +46,18 @@ public class PlaythroughMode : MonoBehaviour
 
     void Won()
     {
-        // capsule should be invincible
-
-        throw new System.NotImplementedException();
+        StopMode();
+        gameOverMode.BeginMode(won: true);
     }
 
     void LostLife(CollisionObjectType obj)
     {
-        // TODO: some effect
-
-        throw new System.NotImplementedException();
+        // some effect ?
     }
 
     void Died()
     {
-        // TODO: you lost message
-
-        throw new System.NotImplementedException();
+        StopMode();
+        gameOverMode.BeginMode(won: false);
     }
 }

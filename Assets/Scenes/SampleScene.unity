@@ -931,7 +931,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   orbitalPeriod: 8
-  crewCapsuleCollider: {fileID: 403636023}
 --- !u!61 &403636023
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2288,6 +2287,7 @@ GameObject:
   - component: {fileID: 1360627923}
   - component: {fileID: 1360627925}
   - component: {fileID: 1360627926}
+  - component: {fileID: 1360627927}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -2340,6 +2340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da487a5a6d39ef54981870d078f6dde4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameOverMode: {fileID: 1360627927}
   gunsController: {fileID: 923045656}
   asteroidSpawner: {fileID: 1890817974}
   crewCapsule: {fileID: 403636022}
@@ -2358,6 +2359,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playthroughMode: {fileID: 1360627925}
   instructionsScreen: {fileID: 1985808732}
+--- !u!114 &1360627927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1360627922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 630d84d7bcd38f74788ce3bdb3570748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playthroughMode: {fileID: 1360627925}
+  wonScreen: {fileID: 370676603}
+  lostScreen: {fileID: 198836031}
 --- !u!1 &1364639667
 GameObject:
   m_ObjectHideFlags: 0
