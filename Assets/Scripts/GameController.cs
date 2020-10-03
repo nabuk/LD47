@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    public void PauseToggle()
+    {
+        pause = !pause;
+
+        pauseText.SetActive(pause);
+        Time.timeScale = pause ? 0f : 1f;
+    }
+
+    [SerializeField]
+    AsteroidSpawner asteroidSpawner = default;
+
     [SerializeField]
     GameObject pauseText = default;
 
@@ -15,7 +26,6 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(ShowInstructionsLetterByLetter());
     }
 
     // Update is called once per frame
@@ -25,14 +35,11 @@ public class GameController : MonoBehaviour
         {
             PauseToggle();
         }
-    }
 
-    public void PauseToggle()
-    {
-        pause = !pause;
-
-        pauseText.SetActive(pause);
-        Time.timeScale = pause ? 0f : 1f;
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            asteroidSpawner.Spawn();
+        }
     }
 
     IEnumerator ShowInstructionsLetterByLetter()
