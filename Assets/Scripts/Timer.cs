@@ -8,6 +8,7 @@ public class Timer : MonoBehaviour
 
     public void SetTime(int seconds)
     {
+        text.gameObject.SetActive(true);
         this.seconds = seconds;
         elapsed = 0;
         UpdateText();
@@ -15,6 +16,7 @@ public class Timer : MonoBehaviour
 
     public void StartTime()
     {
+        text.gameObject.SetActive(true);
         measureElapsed = true;
     }
 

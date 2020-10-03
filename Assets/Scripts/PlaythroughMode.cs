@@ -2,13 +2,17 @@
 
 public class PlaythroughMode : MonoBehaviour
 {
-    public void Start()
+    public void BeginMode()
     {
         timer.SetTime(1 * 60);
         timer.StartTime();
         crewCapsule.BeginPlaythrough();
         asteroidSpawner.StartSpawningForPlaythroughMode(gameTimeSec);
+        gunsController.GunsActive = true;
     }
+
+    [SerializeField]
+    GunsController gunsController = default;
 
     [SerializeField]
     AsteroidSpawner asteroidSpawner = default;

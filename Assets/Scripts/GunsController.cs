@@ -2,6 +2,8 @@
 
 public class GunsController : MonoBehaviour
 {
+    public bool GunsActive { get; set; }
+
     [SerializeField]
     ProjectileSpawner projectileSpawner = default;
 
@@ -14,6 +16,9 @@ public class GunsController : MonoBehaviour
 
     void Update()
     {
+        if (!GunsActive)
+            return;
+
         var mousePosition = GetMousePosition();
         if (mousePosition != Vector2.zero)
         {

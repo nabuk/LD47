@@ -11,6 +11,7 @@ public class AsteroidSpawner : MonoBehaviour
         this.autoSpawning = true;
         this.lastSpawnTime = float.MinValue;
         this.currentCooldown = 0f;
+        this.idleMode = false;
     }
 
     public void StartSpawningForIdleMode()
@@ -18,6 +19,7 @@ public class AsteroidSpawner : MonoBehaviour
         this.autoSpawning = true;
         this.lastSpawnTime = float.MinValue;
         this.currentCooldown = 0f;
+        this.idleMode = true;
     }
 
     public void StopSpawning()

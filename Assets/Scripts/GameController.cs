@@ -18,18 +18,18 @@ public class GameController : MonoBehaviour
     [SerializeField]
     TMP_Text instructionsText = default;
 
-    PlaythroughMode playthroughMode;
+    InstructionsMode instructionsMode;
 
     bool pause = false;
 
     void Awake()
     {
-        playthroughMode = GetComponent<PlaythroughMode>();
+        instructionsMode = GetComponent<InstructionsMode>();
     }
 
     void Start()
     {
-        playthroughMode.Start();
+        instructionsMode.BeginMode();
     }
 
     void Update()
