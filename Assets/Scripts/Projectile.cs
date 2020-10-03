@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class Projectile : MonoBehaviour, ICollisionHandler
 {
+    public CollisionObjectType Type => CollisionObjectType.Projectile;
+
     public void Initialize(Vector2 position, float zRotationDeg, Vector2 v)
     {
         this.transform.position = position;
@@ -11,10 +13,12 @@ public class Projectile : MonoBehaviour
         this.timeOfCreation = Time.time;
     }
 
-    const float destroyAfterSeconds = 4;
+    [SerializeField]
+    Transform basePoint = default;
+
+    const float destroyAfterSeconds = 2;
     Vector2 v;
     float timeOfCreation;
-
 
     void Update()
     {
@@ -24,6 +28,15 @@ public class Projectile : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        var hit = Physics2D.Raycast(basePoint.position, v, (transform.position - basePoint.position).magnitude * 2);
+        if (hit.collider != null)
+            this.HandleHits(hit.collider);
+    }
+
+    public void CollidedWith(CollisionObjectType objectType)
+    {
+        Destroy(gameObject);
     }
 }
 

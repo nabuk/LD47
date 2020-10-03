@@ -23,7 +23,7 @@ public class GunsController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            var projectileSpeed = 8f;
+            var projectileSpeed = 16f;
             var zAngle = transform.eulerAngles.z;
             Vector2 v = Quaternion.Euler(0, 0, zAngle) * (Vector2.up * projectileSpeed);
 

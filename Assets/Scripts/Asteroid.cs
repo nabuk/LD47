@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 
-public class Asteroid : MonoBehaviour
+public class Asteroid : MonoBehaviour, ICollisionHandler
 {
+    public CollisionObjectType Type => CollisionObjectType.Asteroid;
+
     public void Initialize(
         Vector2 position,
         Vector2 forceVector,
@@ -14,9 +16,16 @@ public class Asteroid : MonoBehaviour
         this.gravityForceMag = gravityForceMag;
     }
 
+    float r = 0.2f;
     Vector2 v;
     Vector2 gravitySource;
     float gravityForceMag;
+
+    void Awake()
+    {
+        this.GetComponent<CircleCollider2D>().radius = r;
+    }
+
 
     void Update()
     {
@@ -32,5 +41,15 @@ public class Asteroid : MonoBehaviour
         v += gForceVector * timeScale;
 
         transform.position += (Vector3)(v * timeScale);
+
+        var hits = Physics2D.OverlapCircleAll(this.transform.position, r);
+        this.HandleHits(hits);
+    }
+
+    void ICollisionHandler.CollidedWith(CollisionObjectType objectType)
+    {
+        //TODO: some effect before
+
+        Destroy(gameObject);
     }
 }
