@@ -11,6 +11,7 @@ public class CrewCapsule : MonoBehaviour, ICollisionHandler
     public void BeginPlaythrough()
     {
         lives = 3;
+        ApplySpriteByLives();
         invincibleTimeLeft = 0;
         isActivePlaythrough = true;
         crewCapsuleCollider.enabled = true;
@@ -28,10 +29,26 @@ public class CrewCapsule : MonoBehaviour, ICollisionHandler
     SpriteRenderer spriteRenderer = default;
 
     [SerializeField]
+    SpriteRenderer beepSpriteRenderer = default;
+
+    [SerializeField]
     Collider2D crewCapsuleCollider = default;
+
+    [SerializeField]
+    Sprite capsule0Hits = default;
+
+    [SerializeField]
+    Sprite capsule1Hit = default;
+
+    [SerializeField]
+    Sprite capsule2Hits = default;
+
+    [SerializeField]
+    Sprite capsule3Hits = default;
 
     const float invincibleAlpha = 0.5f;
     const float cooldownAfterHitSec = 2f;
+    const float beepPeriod = 2f;
     int lives;
     float p;
     float r;
@@ -60,6 +77,9 @@ public class CrewCapsule : MonoBehaviour, ICollisionHandler
             : 1;
         var c = spriteRenderer.color;
         spriteRenderer.color = new Color(c.r, c.g, c.b, alpha);
+        beepSpriteRenderer.color = new Color(c.r, c.g, c.b, alpha);
+
+        ApplyBeep();
     }
 
     Vector2 CalculatePosition(float p, float r)
@@ -78,6 +98,8 @@ public class CrewCapsule : MonoBehaviour, ICollisionHandler
         {
             lives--;
 
+            ApplySpriteByLives();
+
             if (lives == 0)
             {
                 Died();
@@ -89,5 +111,23 @@ public class CrewCapsule : MonoBehaviour, ICollisionHandler
                 crewCapsuleCollider.enabled = false;
             }
         }
+    }
+
+    void ApplySpriteByLives()
+    {
+        switch (lives)
+        {
+            case 3: spriteRenderer.sprite = capsule0Hits; break;
+            case 2: spriteRenderer.sprite = capsule1Hit; break;
+            case 1: spriteRenderer.sprite = capsule2Hits; break;
+            case 0: spriteRenderer.sprite = capsule3Hits; break;
+        }
+    }
+
+    void ApplyBeep()
+    {
+        var p = Mathf.Repeat(Time.time, beepPeriod) / beepPeriod;
+        bool beepOn = lives > 0 && p > 0.5f;
+        beepSpriteRenderer.enabled = beepOn;
     }
 }
