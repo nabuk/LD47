@@ -6,6 +6,7 @@ public class InstructionsMode : MonoBehaviour
     {
         this.instructionsScreen.SetActive(true);
         isOn = true;
+        sfxPlayer.AllowCollisionSounds = false;
     }
 
     public void StopMode()
@@ -20,6 +21,9 @@ public class InstructionsMode : MonoBehaviour
     [SerializeField]
     GameObject instructionsScreen = default;
 
+    [SerializeField]
+    SfxPlayer sfxPlayer = default;
+
     bool isOn = false;
 
     void Update()
@@ -28,6 +32,7 @@ public class InstructionsMode : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
+                sfxPlayer.PlaySelect();
                 StopMode();
                 playthroughMode.BeginMode();
             }

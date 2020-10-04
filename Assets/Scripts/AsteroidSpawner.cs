@@ -34,6 +34,9 @@ public class AsteroidSpawner : MonoBehaviour
 
     [SerializeField]
     Asteroid asteroidPrefab = default;
+
+    [SerializeField]
+    SfxPlayer sfxPlayer = default;
     
     float totalTime, elapsed;
     float lastSpawnTime;
@@ -82,7 +85,8 @@ public class AsteroidSpawner : MonoBehaviour
             forceVector: v,
             gravitySource: new Vector2(0, 0),
             gravityForceMag: arg.GravityForceMag,
-            isIdle: idleMode);
+            isIdle: idleMode,
+            sfxPlayer: sfxPlayer);
     }
 
     void KillNotIdle()

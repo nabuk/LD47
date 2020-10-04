@@ -11,14 +11,19 @@ public class Asteroid : MonoBehaviour, ICollisionHandler
         Vector2 forceVector,
         Vector2 gravitySource,
         float gravityForceMag,
-        bool isIdle)
+        bool isIdle,
+        SfxPlayer sfxPlayer)
     {
         this.transform.position = position;
         this.v = forceVector;
         this.gravitySource = gravitySource;
         this.gravityForceMag = gravityForceMag;
         this.isIdle = isIdle;
+        this.sfxPlayer = sfxPlayer;
     }
+
+    [SerializeField]
+    SpriteRenderer spriteRenderer = default;
 
     const float destroyNotSoonerThanSec = 5;
     float r;
@@ -27,6 +32,7 @@ public class Asteroid : MonoBehaviour, ICollisionHandler
     float gravityForceMag;
     float createdAt;
     bool isIdle;
+    SfxPlayer sfxPlayer;
 
     void Awake()
     {
@@ -60,6 +66,13 @@ public class Asteroid : MonoBehaviour, ICollisionHandler
     {
         //TODO: some effect before
 
+        if (spriteRenderer.isVisible)
+        {
+            var noSoundAfterLength = 30f;
+            var volume = (noSoundAfterLength - Mathf.Clamp(transform.position.magnitude, 0f, noSoundAfterLength)) / noSoundAfterLength;
+            sfxPlayer.PlayRockCollision(volume);
+        }
+        
         Destroy(gameObject);
     }
 

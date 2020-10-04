@@ -7,6 +7,9 @@ public class GunsController : MonoBehaviour
     [SerializeField]
     ProjectileSpawner projectileSpawner = default;
 
+    [SerializeField]
+    SfxPlayer sfxPlayer = default;
+
     Gun[] guns;
     bool skipNextFrame; // to avoid firing as continue
 
@@ -32,6 +35,7 @@ public class GunsController : MonoBehaviour
 
         if (!skipNextFrame && Input.GetMouseButtonDown(0))
         {
+            sfxPlayer.PlayLaserShot();
             var projectileSpeed = 16f;
             var zAngle = transform.eulerAngles.z;
             Vector2 v = Quaternion.Euler(0, 0, zAngle) * (Vector2.up * projectileSpeed);

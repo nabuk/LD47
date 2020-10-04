@@ -15,6 +15,7 @@ public class GameOverMode : MonoBehaviour
 
         
         isOn = true;
+        sfxPlayer.AllowCollisionSounds = false;
     }
 
     public void StopMode()
@@ -33,6 +34,9 @@ public class GameOverMode : MonoBehaviour
     [SerializeField]
     GameObject lostScreen = default;
 
+    [SerializeField]
+    SfxPlayer sfxPlayer = default;
+
     bool isOn = false;
 
     void Update()
@@ -41,6 +45,7 @@ public class GameOverMode : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
+                sfxPlayer.PlaySelect();
                 StopMode();
                 playthroughMode.BeginMode();
             }

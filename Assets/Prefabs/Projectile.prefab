@@ -76,6 +76,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   basePoint: {fileID: 2743664953374299068}
+  spriteRenderer: {fileID: 6173518452812839872}
 --- !u!1 &6173518452812839874
 GameObject:
   m_ObjectHideFlags: 0

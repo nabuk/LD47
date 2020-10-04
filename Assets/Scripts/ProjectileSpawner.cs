@@ -9,9 +9,13 @@ public class ProjectileSpawner : MonoBehaviour
         projectile.Initialize(
             position,
             zRotationDeg,
-            v);
+            v,
+            sfxPlayer);
     }
 
     [SerializeField]
     Projectile projectilePrefab = default;
+
+    [SerializeField]
+    SfxPlayer sfxPlayer = default;
 }

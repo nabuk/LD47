@@ -4,11 +4,12 @@ public class PlaythroughMode : MonoBehaviour
 {
     public void BeginMode()
     {
-        timer.SetTime(1 * 5);
+        timer.SetTime(1 * 30);
         timer.StartTime();
         crewCapsule.BeginPlaythrough();
         asteroidSpawner.StartSpawningForPlaythroughMode(gameTimeSec);
         gunsController.GunsActive = true;
+        sfxPlayer.AllowCollisionSounds = true;
     }
 
     public void StopMode()
@@ -34,6 +35,9 @@ public class PlaythroughMode : MonoBehaviour
 
     [SerializeField]
     Timer timer = default;
+
+    [SerializeField]
+    SfxPlayer sfxPlayer = default;
 
     const int gameTimeSec = 1 * 60;
 
