@@ -1,26 +1,8 @@
-﻿using System.Collections;
-using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    public void PauseToggle()
-    {
-        pause = !pause;
-
-        pauseText.SetActive(pause);
-        Time.timeScale = pause ? 0f : 1f;
-    }
-
-    [SerializeField]
-    GameObject pauseText = default;
-
-    [SerializeField]
-    TMP_Text instructionsText = default;
-
     InstructionsMode instructionsMode;
-
-    bool pause = false;
 
     void Awake()
     {
@@ -30,30 +12,5 @@ public class GameController : MonoBehaviour
     void Start()
     {
         instructionsMode.BeginMode();
-    }
-
-    void Update()
-    {
-        //if (Input.GetKeyDown(KeyCode.P))
-        //{
-        //    PauseToggle();
-        //}
-    }
-
-    IEnumerator ShowInstructionsLetterByLetter()
-    {
-        int length = instructionsText.text.Length;
-
-        for (int i = 0; i < length; i++)
-        {
-            var c = instructionsText.text[i];
-            instructionsText.maxVisibleCharacters = i;
-            if (c != ' ')
-                yield return new WaitForSeconds(0.15f);
-            else
-                yield return new WaitForSeconds(0.1f);
-        }
-
-        instructionsText.maxVisibleCharacters = length;
     }
 }

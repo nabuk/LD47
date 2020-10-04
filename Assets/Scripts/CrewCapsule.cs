@@ -6,6 +6,7 @@ public class CrewCapsule : MonoBehaviour, ICollisionHandler
     public const float CooldownAfterHitSec = 2f;
 
     public CollisionObjectType Type => CollisionObjectType.CrewCapsule;
+    public int LivesLeft => lives;
 
     public event Action Died = delegate { };
     public event Action<CollisionObjectType> LostLife = delegate { };

@@ -8,6 +8,7 @@ public class PlaythroughMode : MonoBehaviour
         timer.SetTime(1 * 60);
         timer.StartTime();
         crewCapsule.BeginPlaythrough();
+        livesDisplay.Show();
         asteroidSpawner.StartSpawningForPlaythroughMode(gameTimeSec);
         gunsController.GunsActive = true;
         sfxPlayer.AllowCollisionSounds = true;
@@ -19,6 +20,12 @@ public class PlaythroughMode : MonoBehaviour
         crewCapsule.StopPlaythrough();
         asteroidSpawner.StartSpawningForIdleMode();
         gunsController.GunsActive = false;
+    }
+
+    public void HideHud()
+    {
+        timer.HideTimer();
+        livesDisplay.Hide();
     }
 
     [SerializeField]
@@ -35,6 +42,9 @@ public class PlaythroughMode : MonoBehaviour
 
     [SerializeField]
     Timer timer = default;
+
+    [SerializeField]
+    LivesDisplay livesDisplay = default;
 
     [SerializeField]
     SfxPlayer sfxPlayer = default;
@@ -68,7 +78,7 @@ public class PlaythroughMode : MonoBehaviour
     IEnumerator WonCoroutine()
     {
         yield return new WaitForSecondsRealtime(2f);
-        timer.HideTimer();
+        HideHud();
         gameOverMode.BeginMode(won: true);
     }
 
@@ -76,7 +86,7 @@ public class PlaythroughMode : MonoBehaviour
     {
         Time.timeScale = 0.1f;
         yield return new WaitForSecondsRealtime(2f);
-        timer.HideTimer();
+        HideHud();
         gameOverMode.BeginMode(won: false);
         Time.timeScale = 1f;
     }

@@ -9,6 +9,7 @@ public class InstructionsMode : MonoBehaviour
         sfxPlayer.AllowCollisionSounds = false;
         cooldownRemaining = 1.5f;
         continueText.SetActive(false);
+        this.playthroughMode.HideHud();
     }
 
     public void StopMode()
