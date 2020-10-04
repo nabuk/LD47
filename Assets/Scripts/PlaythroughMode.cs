@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class PlaythroughMode : MonoBehaviour
 {
@@ -15,7 +16,6 @@ public class PlaythroughMode : MonoBehaviour
     public void StopMode()
     {
         timer.StopTimer();
-        timer.HideTimer();
         crewCapsule.StopPlaythrough();
         asteroidSpawner.StartSpawningForIdleMode();
         gunsController.GunsActive = false;
@@ -51,17 +51,56 @@ public class PlaythroughMode : MonoBehaviour
     void Won()
     {
         StopMode();
-        gameOverMode.BeginMode(won: true);
+        StartCoroutine(WonCoroutine());
     }
 
     void LostLife(CollisionObjectType obj)
     {
-        // some effect ?
+        StartCoroutine(LostLifeSlowdownCoroutine());
     }
 
     void Died()
     {
         StopMode();
+        StartCoroutine(DiedCoroutine());
+    }
+
+    IEnumerator WonCoroutine()
+    {
+        yield return new WaitForSecondsRealtime(2f);
+        timer.HideTimer();
+        gameOverMode.BeginMode(won: true);
+    }
+
+    IEnumerator DiedCoroutine()
+    {
+        Time.timeScale = 0.1f;
+        yield return new WaitForSecondsRealtime(2f);
+        timer.HideTimer();
         gameOverMode.BeginMode(won: false);
+        Time.timeScale = 1f;
+    }
+
+    IEnumerator LostLifeSlowdownCoroutine()
+    {
+        const float slowdownTimeScale = 0.3f;
+        const float slowdownDuration = 1f;
+        float slowDownFor = 0f;
+        float lastTime = Time.unscaledTime;
+
+        Time.timeScale = slowdownTimeScale;
+
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        while (slowDownFor < slowdownDuration)
+        {
+            var p = Mathf.Clamp(slowDownFor, 0, slowdownDuration) / slowdownDuration;
+            Time.timeScale = slowdownTimeScale + (1f - slowdownTimeScale) * p;
+            yield return new WaitForSecondsRealtime(0.05f);
+            slowDownFor += Time.unscaledTime - lastTime;
+            lastTime = Time.unscaledTime;
+        }
+
+        Time.timeScale = 1;
     }
 }

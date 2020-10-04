@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class CrewCapsule : MonoBehaviour, ICollisionHandler
 {
+    public const float CooldownAfterHitSec = 2f;
+
     public CollisionObjectType Type => CollisionObjectType.CrewCapsule;
 
     public event Action Died = delegate { };
@@ -46,8 +48,6 @@ public class CrewCapsule : MonoBehaviour, ICollisionHandler
     [SerializeField]
     Sprite capsule3Hits = default;
 
-    const float invincibleAlpha = 0.5f;
-    const float cooldownAfterHitSec = 2f;
     const float beepPeriod = 2f;
     int lives;
     float p;
@@ -97,7 +97,7 @@ public class CrewCapsule : MonoBehaviour, ICollisionHandler
             else
             {
                 LostLife(objectType);
-                this.invincibleTimeLeft = cooldownAfterHitSec;
+                this.invincibleTimeLeft = CooldownAfterHitSec;
                 crewCapsuleCollider.enabled = false;
             }
         }
@@ -132,7 +132,7 @@ public class CrewCapsule : MonoBehaviour, ICollisionHandler
 
         if (invincibleTimeLeft > 0)
         {
-            var p = 1f - (invincibleTimeLeft / cooldownAfterHitSec);
+            var p = 1f - (invincibleTimeLeft / CooldownAfterHitSec);
             var alphaBarelyVisible = 0.2f;
             var alphaMoreVisible = 0.5f;
 

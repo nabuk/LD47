@@ -7554,7 +7554,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zRotationFrom: -30
-  zRotationTo: 30
+  zRotationTo: -30
 --- !u!1001 &405489081
 PrefabInstance:
   m_ObjectHideFlags: 0
