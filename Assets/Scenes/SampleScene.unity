@@ -1195,6 +1195,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 6173518452347596645, guid: bc9d1f192f16e964396e911474180315,
     type: 3}
+  sfxPlayer: {fileID: 2022658458}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2378,6 +2379,7 @@ MonoBehaviour:
   asteroidSpawner: {fileID: 1890817974}
   crewCapsule: {fileID: 403636022}
   timer: {fileID: 801632068}
+  sfxPlayer: {fileID: 2022658458}
 --- !u!114 &1360627926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2392,6 +2394,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playthroughMode: {fileID: 1360627925}
   instructionsScreen: {fileID: 1985808732}
+  continueText: {fileID: 1255534401}
   sfxPlayer: {fileID: 2022658458}
 --- !u!114 &1360627927
 MonoBehaviour:
@@ -2407,7 +2410,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playthroughMode: {fileID: 1360627925}
   wonScreen: {fileID: 370676603}
+  wonScreenContinueText: {fileID: 1204813077}
   lostScreen: {fileID: 198836031}
+  lostScreenContinueText: {fileID: 805599485}
   sfxPlayer: {fileID: 2022658458}
 --- !u!1 &1364639667
 GameObject:

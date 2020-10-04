@@ -7,6 +7,8 @@ public class InstructionsMode : MonoBehaviour
         this.instructionsScreen.SetActive(true);
         isOn = true;
         sfxPlayer.AllowCollisionSounds = false;
+        cooldownRemaining = 1.5f;
+        continueText.SetActive(false);
     }
 
     public void StopMode()
@@ -22,19 +24,34 @@ public class InstructionsMode : MonoBehaviour
     GameObject instructionsScreen = default;
 
     [SerializeField]
+    GameObject continueText = default;
+
+    [SerializeField]
     SfxPlayer sfxPlayer = default;
 
+
     bool isOn = false;
+    float cooldownRemaining;
 
     void Update()
     {
         if (isOn)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (cooldownRemaining > 0)
             {
-                sfxPlayer.PlaySelect();
-                StopMode();
-                playthroughMode.BeginMode();
+                cooldownRemaining -= Time.deltaTime;
+            }
+            else
+            {
+                if (!continueText.activeSelf)
+                    continueText.SetActive(true);
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    sfxPlayer.PlaySelect();
+                    StopMode();
+                    playthroughMode.BeginMode();
+                }
             }
         }
     }
