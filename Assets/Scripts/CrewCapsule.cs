@@ -11,7 +11,9 @@ public class CrewCapsule : MonoBehaviour, ICollisionHandler
     public void BeginPlaythrough()
     {
         lives = 3;
+        invincibleTimeLeft = 0;
         isActivePlaythrough = true;
+        crewCapsuleCollider.enabled = true;
     }
 
     public void StopPlaythrough()
@@ -22,13 +24,19 @@ public class CrewCapsule : MonoBehaviour, ICollisionHandler
     [SerializeField]
     float orbitalPeriod = 4f;
 
-    //[SerializeField]
-    //Collider2D crewCapsuleCollider = default;
+    [SerializeField]
+    SpriteRenderer spriteRenderer = default;
 
+    [SerializeField]
+    Collider2D crewCapsuleCollider = default;
+
+    const float invincibleAlpha = 0.5f;
+    const float cooldownAfterHitSec = 2f;
     int lives;
     float p;
     float r;
     bool isActivePlaythrough = false;
+    float invincibleTimeLeft = 0;
 
     void Awake()
     {
@@ -41,6 +49,17 @@ public class CrewCapsule : MonoBehaviour, ICollisionHandler
         var timeScale = Time.deltaTime;
         p = Mathf.Repeat(p + timeScale / orbitalPeriod, 1f);
         transform.position = CalculatePosition(p, r);
+
+        if (invincibleTimeLeft > 0)
+            invincibleTimeLeft -= Time.deltaTime;
+        else
+            crewCapsuleCollider.enabled = true;
+
+        var alpha = invincibleTimeLeft > 0
+            ? invincibleAlpha + (1f - invincibleAlpha) * (cooldownAfterHitSec - invincibleTimeLeft) / cooldownAfterHitSec
+            : 1;
+        var c = spriteRenderer.color;
+        spriteRenderer.color = new Color(c.r, c.g, c.b, alpha);
     }
 
     Vector2 CalculatePosition(float p, float r)
@@ -52,7 +71,7 @@ public class CrewCapsule : MonoBehaviour, ICollisionHandler
 
     void ICollisionHandler.CollidedWith(CollisionObjectType objectType)
     {
-        if (!isActivePlaythrough)
+        if (!isActivePlaythrough || invincibleTimeLeft > 0)
             return;
 
         if (lives > 0)
@@ -66,9 +85,8 @@ public class CrewCapsule : MonoBehaviour, ICollisionHandler
             else
             {
                 LostLife(objectType);
-
-                //TODO: invincible mode
-                //crewCapsuleCollider.enabled = false;
+                this.invincibleTimeLeft = cooldownAfterHitSec;
+                crewCapsuleCollider.enabled = false;
             }
         }
     }

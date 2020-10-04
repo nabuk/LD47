@@ -962,6 +962,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   orbitalPeriod: 8
+  spriteRenderer: {fileID: 883249332}
+  crewCapsuleCollider: {fileID: 403636023}
 --- !u!61 &403636023
 BoxCollider2D:
   m_ObjectHideFlags: 0
