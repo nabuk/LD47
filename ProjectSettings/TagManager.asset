@@ -38,6 +38,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Stars
+    uniqueID: 1877129409
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
@@ -58,4 +61,7 @@ TagManager:
     locked: 0
   - name: UI
     uniqueID: 1027047953
+    locked: 0
+  - name: Cursor
+    uniqueID: 1426881929
     locked: 0
