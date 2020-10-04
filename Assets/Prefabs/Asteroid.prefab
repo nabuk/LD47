@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 2739144260807228065}
   - component: {fileID: 2739144260807228066}
   - component: {fileID: 723434378}
+  - component: {fileID: 5451532489513583678}
   m_Layer: 0
   m_Name: Asteroid
   m_TagString: Untagged
@@ -128,6 +129,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 2739144260292061910}
+  dyingSprite1: {fileID: -1384697504790633596, guid: 16a85bc3a6dcfed40ae894ba3e7c6665,
+    type: 3}
+  dyingSprite2: {fileID: 2655291476922785314, guid: 16a85bc3a6dcfed40ae894ba3e7c6665,
+    type: 3}
 --- !u!58 &723434378
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -144,3 +149,17 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.22
+--- !u!114 &5451532489513583678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2739144260807228064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1936116db81b6845a664c0373f21c5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zRotationFrom: -120
+  zRotationTo: 120
