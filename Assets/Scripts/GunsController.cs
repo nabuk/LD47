@@ -47,6 +47,7 @@ public class GunsController : MonoBehaviour
                     zAngle,
                     v
                     );
+                gun.Shake();
             }
                 
         }

@@ -116,7 +116,7 @@ public class Asteroid : MonoBehaviour, ICollisionHandler
             timeTillDead -= Time.deltaTime;
 
             var a = Mathf.Clamp(timeTillDead / dyingDuration, 0, 1);
-            spriteRenderer.color = new Color(1, 1, 1, a);
+            spriteRenderer.color = new Color(1, 1, 1, Mathf.Sqrt(a));
 
             if (a > 0.5f)
                 spriteRenderer.sprite = dyingSprite1;
