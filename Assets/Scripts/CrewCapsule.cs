@@ -67,17 +67,7 @@ public class CrewCapsule : MonoBehaviour, ICollisionHandler
         p = Mathf.Repeat(p + timeScale / orbitalPeriod, 1f);
         transform.position = CalculatePosition(p, r);
 
-        if (invincibleTimeLeft > 0)
-            invincibleTimeLeft -= Time.deltaTime;
-        else
-            crewCapsuleCollider.enabled = true;
-
-        var alpha = invincibleTimeLeft > 0
-            ? invincibleAlpha + (1f - invincibleAlpha) * (cooldownAfterHitSec - invincibleTimeLeft) / cooldownAfterHitSec
-            : 1;
-        var c = spriteRenderer.color;
-        spriteRenderer.color = new Color(c.r, c.g, c.b, alpha);
-        beepSpriteRenderer.color = new Color(c.r, c.g, c.b, alpha);
+        HandleInvincibleMode();
 
         ApplyBeep();
     }
@@ -129,5 +119,38 @@ public class CrewCapsule : MonoBehaviour, ICollisionHandler
         var p = Mathf.Repeat(Time.time, beepPeriod) / beepPeriod;
         bool beepOn = lives > 0 && p > 0.5f;
         beepSpriteRenderer.enabled = beepOn;
+    }
+
+    void HandleInvincibleMode()
+    {
+        if (invincibleTimeLeft > 0)
+            invincibleTimeLeft -= Time.deltaTime;
+        else
+            crewCapsuleCollider.enabled = true;
+
+        var alpha = 1f;
+
+        if (invincibleTimeLeft > 0)
+        {
+            var p = 1f - (invincibleTimeLeft / cooldownAfterHitSec);
+            var alphaBarelyVisible = 0.2f;
+            var alphaMoreVisible = 0.5f;
+
+            if (p < 0.20f)
+                alpha = alphaBarelyVisible;
+            else if (p < 0.4f)
+                alpha = alphaMoreVisible;
+            else if (p < 0.6f)
+                alpha = alphaBarelyVisible;
+            else if (p < 0.8f)
+                alpha = alphaMoreVisible;
+            else
+                alpha = alphaBarelyVisible;
+        }
+
+        
+        var c = spriteRenderer.color;
+        spriteRenderer.color = new Color(c.r, c.g, c.b, alpha);
+        beepSpriteRenderer.color = new Color(c.r, c.g, c.b, alpha);
     }
 }
