@@ -4,7 +4,7 @@ public class PlaythroughMode : MonoBehaviour
 {
     public void BeginMode()
     {
-        timer.SetTime(1 * 5);
+        timer.SetTime(1 * 60);
         timer.StartTime();
         crewCapsule.BeginPlaythrough();
         asteroidSpawner.StartSpawningForPlaythroughMode(gameTimeSec);
